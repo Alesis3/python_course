@@ -24,9 +24,9 @@ while True:
 
             char = ' '
 
-            for token_plays in plays:
+            for idx, token_plays in enumerate(plays):
                 if token_plays[0] == coordinate_x and token_plays[1] == coordinate_y:
-                    char = '#'
+                    char = 'R' if idx % 2 == 0 else 'A'
 
             if game_token[0] == coordinate_x and game_token[1] == coordinate_y:
                 char = '@'
@@ -46,16 +46,18 @@ while True:
 
     if keys == 'd':
         new_token = [(game_token[0] + 2)%14, game_token[1]]
+
     elif keys == 'a':
         new_token = [(game_token[0] - 2)%14, game_token[1]]
+
     elif keys == '\n':
-        new_token = [game_token[0], game_token[1] + 5]
-        if new_token not in plays:
-            plays.append(new_token)
-        else:
-            new_token = [game_token[0], game_token[1] - 1]
-            plays.append(new_token)
+        col = game_token[0]
+        for row in range(HEIGHT - 1, -1, -1):
+            if [col, row] not in plays:
+                plays.append([col, row])
+                break
         new_token = [0, 0]
+
     elif keys == 'b':
         break
 
