@@ -1,6 +1,6 @@
 import os
-
 import readchar
+from gameFeatures import winner
 
 board = [' | | | | | | ',
          ' | | | | | | ',
@@ -13,6 +13,7 @@ HEIGHT = len(board)
 WIDTH = len(board[0])
 game_token = [0, 0]
 plays = []
+wins = {'Rojos': 0, 'Amarillos': 0}
 while True:
 
     print('+' + '-' * WIDTH + '+')
@@ -34,7 +35,6 @@ while True:
             if board[coordinate_y][coordinate_x] == '|':
                 char = '|'
 
-
             print(char, end='')
 
         print('I')
@@ -45,10 +45,10 @@ while True:
     new_token = [0, 0]
 
     if keys == 'd':
-        new_token = [(game_token[0] + 2)%14, game_token[1]]
+        new_token = [(game_token[0] + 2) % 14, game_token[1]]
 
     elif keys == 'a':
-        new_token = [(game_token[0] - 2)%14, game_token[1]]
+        new_token = [(game_token[0] - 2) % 14, game_token[1]]
 
     elif keys == '\n':
         col = game_token[0]
@@ -62,9 +62,20 @@ while True:
         break
 
     if new_token:
-            game_token = new_token
+        game_token = new_token
 
+    if len(plays) >= 7:
+        answer = winner(plays)
+        if answer:
+            print(answer)
+            input('Presione enter para continuar... ')
 
+            if answer == 'Rojos ganan':
+                wins['Rojos'] += 1
+
+            else:
+                wins['Amarillos'] += 1
+            plays = []
+            game_token = [0, 0]
 
     os.system("clear")
-
