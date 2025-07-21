@@ -28,3 +28,8 @@ def winner(array):
                 return 'Rojos ganan' if idx_partial == 0 else 'Amarillos ganan'
 
     return None
+
+def reset(array, const):
+    array = []
+    const = [0, 0]
+    return array, const
